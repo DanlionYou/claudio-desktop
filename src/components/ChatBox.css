@@ -1,0 +1,517 @@
+.chat-box {
+  display: flex;
+  flex-direction: column;
+  background:
+    linear-gradient(105deg,
+      transparent 0%,
+      rgba(200, 210, 225, 0.015) 25%,
+      rgba(220, 230, 245, 0.025) 35%,
+      rgba(200, 210, 225, 0.015) 45%,
+      transparent 60%
+    ),
+    var(--bg-transparent);
+  border-radius: var(--radius-sm);
+  padding: 8px;
+  height: 100%;
+  border: 1px solid rgba(200, 210, 225, 0.05);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Silver gradient top highlight */
+.chat-box::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(200, 210, 225, 0.02) 15%,
+    rgba(220, 230, 245, 0.1) 30%,
+    rgba(255, 255, 255, 0.1) 50%,
+    rgba(220, 230, 245, 0.1) 70%,
+    rgba(200, 210, 225, 0.02) 85%,
+    transparent 100%
+  );
+  pointer-events: none;
+}
+
+/* Silver gradient bottom glow */
+.chat-box::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 10%;
+  right: 10%;
+  height: 1px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(200, 210, 225, 0.02) 30%,
+    rgba(220, 230, 245, 0.06) 50%,
+    rgba(200, 210, 225, 0.02) 70%,
+    transparent 100%
+  );
+  pointer-events: none;
+}
+
+.chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 8px;
+  background: linear-gradient(180deg,
+    rgba(255, 255, 255, 0.02) 0%,
+    transparent 40%
+  );
+  border-radius: 4px;
+}
+
+.chat-msg {
+  padding: 4px 8px;
+  border-radius: var(--radius-sm);
+  font-size: 12px;
+  max-width: 80%;
+}
+
+.chat-msg.system {
+  align-self: center;
+  color: var(--text-muted);
+  font-style: italic;
+  font-size: 11px;
+}
+
+.chat-msg.user {
+  align-self: flex-end;
+  background: var(--accent-dim);
+  color: var(--text-primary);
+}
+
+.chat-input-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+  min-height: 44px;
+}
+
+.chat-input {
+  flex: 1;
+  height: 36px;
+  padding: 0 12px;
+  border-radius: var(--radius-sm);
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  color: var(--text-primary);
+  font-size: 13px;
+  letter-spacing: 0.2px;
+  transition: border-color var(--transition);
+  outline: none;
+}
+
+.chat-input:focus {
+  border-color: var(--accent);
+}
+
+.chat-input::placeholder {
+  color: var(--text-muted);
+}
+
+.chat-send {
+  min-width: 52px;
+  height: 36px;
+  padding: 0 14px;
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  font-weight: 600;
+  color: #0D1026;
+  background: var(--accent);
+  border: none;
+  transition: opacity var(--transition), transform 0.15s ease;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.chat-send:hover:not(:disabled) {
+  opacity: 0.85;
+}
+
+.chat-send:active:not(:disabled) {
+  transform: scale(0.96);
+}
+
+.chat-send:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+/* ═══════════════════════════════════════════════
+   AI MESSAGE STYLES
+   ═══════════════════════════════════════════════ */
+.chat-msg.ai {
+  align-self: flex-start;
+  display: flex;
+  gap: 6px;
+  max-width: 90%;
+}
+
+.chat-msg-avatar {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--accent-dim);
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.chat-msg-content {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.chat-msg.ai .chat-msg-text {
+  background: var(--accent-dim);
+  color: var(--text-primary);
+  padding: 6px 10px;
+  border-radius: var(--radius-sm);
+  font-size: 12px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.chat-msg.system .chat-msg-text {
+  font-size: 11px;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+/* ═══════════════════════════════════════════════
+   MUSIC CARD — inline track display
+   ═══════════════════════════════════════════════ */
+.music-card {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(200, 210, 225, 0.08);
+  border-radius: var(--radius-sm);
+  padding: 6px 10px;
+  margin-top: 2px;
+  max-width: 260px;
+}
+
+.music-card-icon {
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.music-card-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.music-card-name {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.music-card-artist {
+  font-size: 11px;
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.music-card-play {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  color: #0D1026;
+  background: var(--accent);
+  border: none;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: opacity var(--transition);
+}
+
+.music-card-play:hover {
+  opacity: 0.85;
+}
+
+/* ═══════════════════════════════════════════════
+   LOADING INDICATOR
+   ═══════════════════════════════════════════════ */
+.chat-msg-loading {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 6px 10px;
+  background: var(--accent-dim);
+  border-radius: var(--radius-sm);
+}
+
+.dot-pulse {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text-muted);
+  animation: dot-pulse 1.4s ease-in-out infinite;
+  line-height: 1;
+}
+
+.dot-pulse:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.dot-pulse:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes dot-pulse {
+  0%, 80%, 100% {
+    opacity: 0.2;
+  }
+  40% {
+    opacity: 1;
+  }
+}
+
+/* ═══════════════════════════════════════════════
+   API KEY INPUT ROW
+   ═══════════════════════════════════════════════ */
+.chat-apikey-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 6px;
+  flex-shrink: 0;
+}
+
+/* ═══════════════════════════════════════════════
+   TTS SPEAK BUTTON — on AI messages
+   ═══════════════════════════════════════════════ */
+.chat-msg-text-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 4px;
+}
+
+.chat-speak-btn {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  color: var(--text-muted);
+  background: transparent;
+  border: 1px solid rgba(200, 210, 225, 0.1);
+  cursor: pointer;
+  flex-shrink: 0;
+  margin-top: 4px;
+  transition: all var(--transition);
+}
+
+.chat-speak-btn:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.chat-speak-btn.speaking {
+  color: var(--accent);
+  border-color: var(--accent);
+  background: rgba(255, 255, 255, 0.06);
+  animation: speak-pulse 0.8s ease-in-out infinite;
+}
+
+@keyframes speak-pulse {
+  0%, 100% { box-shadow: 0 0 4px rgba(209, 213, 219, 0.2); }
+  50% { box-shadow: 0 0 12px rgba(209, 213, 219, 0.4); }
+}
+
+/* ═══════════════════════════════════════════════
+   MIC BUTTON — voice input
+   ═══════════════════════════════════════════════ */
+.chat-mic-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  color: var(--text-muted);
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: all var(--transition);
+}
+
+.chat-mic-btn:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+.chat-mic-btn.recording {
+  color: #ff4444;
+  border-color: #ff4444;
+  background: rgba(255, 68, 68, 0.08);
+  animation: mic-pulse 1s ease-in-out infinite;
+}
+
+@keyframes mic-pulse {
+  0%, 100% {
+    box-shadow: 0 0 4px rgba(255, 68, 68, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 16px rgba(255, 68, 68, 0.4);
+  }
+}
+
+/* ═══════════════════════════════════════════════
+   VOICE INPUT MODE — minimal premium microphone
+   ═══════════════════════════════════════════════ */
+.chat-voice-area {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.chat-voice-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  background: transparent;
+  border: 1px solid rgba(200, 210, 225, 0.08);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.chat-voice-btn::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: 50%;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.chat-voice-btn:hover {
+  color: var(--accent);
+  border-color: rgba(209, 213, 219, 0.2);
+  background: rgba(209, 213, 219, 0.03);
+  transform: scale(1.05);
+}
+
+.chat-voice-btn:active {
+  transform: scale(0.92);
+}
+
+.chat-voice-btn.recording {
+  color: #ff4444;
+  border-color: rgba(255, 68, 68, 0.3);
+  background: rgba(255, 68, 68, 0.04);
+}
+
+.chat-voice-btn.recording::after {
+  content: '';
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255, 68, 68, 0.2);
+  animation: voice-ring 1.6s ease-in-out infinite;
+}
+
+@keyframes voice-ring {
+  0%, 100% { opacity: 0.6; transform: scale(1); }
+  50% { opacity: 0.15; transform: scale(1.12); }
+}
+
+.chat-mic-icon {
+  width: 18px;
+  height: 18px;
+}
+
+/* Mode toggle — ultra minimal, tucked away */
+.chat-mode-btn {
+  width: 24px;
+  height: 24px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  opacity: 0.35;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: all 0.25s ease;
+}
+
+.chat-mode-btn:hover {
+  opacity: 0.7;
+  color: var(--accent);
+}
+
+.chat-mode-icon {
+  width: 14px;
+  height: 14px;
+}
+
+/* ═══════════════════════════════════════════════
+   CONFIG ROW — API key input
+   ═══════════════════════════════════════════════ */
+.chat-config-row {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 6px;
+  flex-shrink: 0;
+}
+
+.chat-config-label {
+  font-size: 11px;
+  color: var(--text-muted);
+  font-weight: 500;
+  letter-spacing: 0.3px;
+}
+
+.chat-config-inputs {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
